@@ -1,0 +1,8 @@
+class Solution(object):
+    def intersection(self, nums1, nums2):
+        """
+        One line solution with set operator
+        Runtime: 33 ms beats 82.67%
+        Memory:13.8 MB beats 15.76%
+        """
+        return list(set(nums1) & set(nums2))
