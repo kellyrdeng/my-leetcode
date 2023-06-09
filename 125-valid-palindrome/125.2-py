@@ -1,0 +1,12 @@
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        onlyAlnum = list(filter(str.isalnum, s.lower()))
+        l = 0
+        r = len(onlyAlnum) - 1
+
+        while (l < r) :
+            if (onlyAlnum[l].lower() != onlyAlnum[r].lower()) :
+                return False
+            l += 1
+            r -= 1
+        return True
