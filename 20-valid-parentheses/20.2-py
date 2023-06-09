@@ -1,0 +1,11 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = [0]
+        dict = {0: None, '(':')', '[':"]", '{':"}"}
+        for c in s:
+            if c in dict:
+                stack.append(c)
+            else:
+                if dict[stack.pop()] != c:
+                    return False
+        return stack == [0]
