@@ -1,0 +1,16 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        for c in s:
+            if c == ')' or c == '}' or c == ']': #closing bracket
+                if not stack: #empty
+                    return False
+                else:
+                    cur = stack.pop()
+                    if c == ')' and cur != '(' or c == '}' and cur != '{' or c == ']' and cur != '[':
+                        return False
+            else: #c == '(' or c == '{' or c == '['
+                stack.append(c)
+        if stack:
+            return False 
+        return True
