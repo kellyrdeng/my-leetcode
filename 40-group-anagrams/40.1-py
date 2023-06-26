@@ -1,0 +1,18 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        dict = {}
+        for s in strs:
+            if tuple(sorted(s)) not in list(dict.keys()):
+                if len(s) == 0:
+                    dict[tuple([])] = [""]
+                    print("Added")
+                else: 
+                    dict[tuple(sorted(s))] = [s]
+            else:
+                if len(s) == 0:
+                    dict[tuple([])].append("")
+                    print("Added")
+                else:
+                    dict[tuple(sorted(s))].append(s)
+
+        return list(dict.values())
