@@ -1,0 +1,21 @@
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        #treat the matrix as a sorted list and binary search
+        #given mid, the row (m) can be obtained from m = mid // columns
+        #the column (n) can be obtained from n = mid % columns
+
+        rows = len(matrix)
+        cols = len(matrix[0])
+        start = 0
+        end = rows * cols - 1
+
+        while start <= end:
+            middle = start + ((end - start) //2)
+            num = matrix[middle // cols][middle % cols]
+            if target == num:
+                return True
+            elif target < num:
+                end = middle - 1
+            else:
+                start = middle + 1
+        return False
