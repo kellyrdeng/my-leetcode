@@ -1,0 +1,61 @@
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        #find all initial oranges
+        #call BFS on their neighbors (if not out of bounds) and mark rotting
+        #each round of BFS looks at all current rotting oranges, plus one min per round
+        #at end of BFS check if there's 1s, return -1 if yes, time if not
+
+        rotting = []
+        fresh = []
+        for row in range(len(grid)):
+            for col in range(len(grid[0])):
+                if grid[row][col] == 2:
+                    rotting.append((row, col))
+                if grid[row][col] == 1:
+                    fresh.append((row, col))
+        
+        if((len(fresh) == 0) and (len(rotting) == 0)): #if no oranges
+            return 0
+        
+        if(len(rotting) == 0): #if no rotting oranges
+            return -1
+
+        tup = self.bfs(rotting, grid)
+        time = tup[0]
+        grid = tup[1]
+        
+        for row in range(len(grid)):
+            for col in range(len(grid[0])):
+                if grid[row][col] == 1:
+                    return -1
+        return time
+
+    def bfs(self, all_rotted, grid):
+        queue = [all_rotted] #[ [(i,j),(i,j)], [(i,j)] ]
+        offsets = [[-1, 0], [0, -1], [0, 1], [1, 0]]
+        time = -1
+
+        while queue:
+            cur_rotted = queue.pop(0) #list of rotted to check out
+            print(cur_rotted)
+
+            new_rotted = []
+            for cur in cur_rotted:
+                for offset in offsets:
+                    i = cur[0] + offset[0]
+                    j = cur[1] + offset[1]
+
+                    if not self.in_bounds(i, j, grid) or grid[i][j] != 1:
+                        continue
+
+                    grid[i][j] = 2
+                    new_rotted.append((i, j))
+            if len(cur_rotted) == 0: #no new rotting oranges
+                break
+            queue.append(new_rotted)
+            time += 1
+
+        return (time, grid)
+
+    def in_bounds(self, i, j, grid):
+        return 0 <= i and i < len(grid) and 0 <= j and j < len(grid[0])
