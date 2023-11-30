@@ -1,0 +1,30 @@
+class Solution:
+    def isLongPressedName(self, name: str, typed: str) -> bool:
+        #split typed into chunks of characters ["ss", "aa", "e", "dd"]
+        name_arr = []
+        typed_arr = []
+        name_length = -1
+        typed_length = -1
+
+        for c in typed:
+            if typed_length == -1 or c != typed_arr[typed_length ][0]:
+                typed_arr.append(c)
+                typed_length += 1
+            else:
+                typed_arr[typed_length] = typed_arr[typed_length] + c
+
+        for c in name:
+            if name_length == -1 or c != name_arr[name_length][0]:
+                name_arr.append(c)
+                name_length += 1
+            else:
+                name_arr[name_length] = name_arr[name_length] + c
+
+        if name_length != typed_length:
+            return False
+
+        for i in range(len(name_arr)):
+            if name_arr[i] not in typed_arr[i]:
+                return False
+
+        return True
