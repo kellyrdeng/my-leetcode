@@ -1,0 +1,28 @@
+class Solution:
+    def isLongPressedName(self, name: str, typed: str) -> bool:
+        p1, p2 = 0, 0 #initialize pointers, p1 keets track of position in name, p2 typed
+
+        while self.pointersWithinRange(p1, p2, name, typed):
+            a = name[p1]
+            b = typed[p2]
+
+            if a != b:
+                return False
+
+            #a and b match, so move both pointers forward
+            while self.pointersWithinRange(p1, p2, name, typed) and name[p1] == a and typed[p2] == b:
+                p1 += 1
+                p2 += 1
+
+            #p1 is at next letter, continue moving p2 to go to next letter
+            while p2 < len(typed) and typed[p2] == b:
+                p2 += 1
+
+        #if there remains unmatched characters, return false
+        if (p1 == len(name) and p2 < len(typed)) or (p1 < len(name) and p2 == len(typed)):
+            return False
+
+        return True
+        
+    def pointersWithinRange(self, p1, p2, name, typed):
+        return p1 < len(name) and p2 < len(typed)
