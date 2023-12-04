@@ -1,0 +1,24 @@
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        #p1 keeps track of first occurrence
+        #p2 keeps track of last duplicates
+        #once p1 and p2 set, del [p1:p2], p1 set to p2, repeat
+        #unique elements = # of times we move p1
+
+        count = 0
+
+        while count < len(nums):
+            p1, p2 = count, count
+
+            #while equal, increment p2
+            while (self.inRange(p1, p2, nums) and nums[p1] == nums[p2]):
+                p2 += 1
+            
+            #now p1 is at the first occurrence of the num and p2 is at the next num
+            del nums[p1 + 1:p2] #delete all of the num except p1
+            count += 1
+        
+        return len(nums) 
+    
+    def inRange(self, p1, p2, nums):
+        return p1 < len(nums) and p2 < len(nums)
