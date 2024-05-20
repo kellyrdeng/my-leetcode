@@ -8,8 +8,9 @@ def selection_sort(lst):
             if lst[j] < lst[index_of_smallest]:
                 index_of_smallest = j
         
-        #swap current with the newfound smallest
-        lst[i], lst[index_of_smallest] = lst[index_of_smallest], lst[i]
+        if lst[i] != lst[index_of_smallest]: #check for self swap
+            #swap current with the newfound smallest
+            lst[i], lst[index_of_smallest] = lst[index_of_smallest], lst[i]
     
     return lst
 
