@@ -3,11 +3,11 @@ class Solution:
         if str1 + str2 != str2 + str1:
             return ""
 
-        gcd_len = gcd(len(str1), len(str2))
+        gcd_len = self.gcd(len(str1), len(str2))
         return str1[:gcd_len]
+        
 
     def gcd(self, a, b):
         while b:
-            a = b
-            b = a % b
+            a, b = b, a % b # must be done in one line
         return a
