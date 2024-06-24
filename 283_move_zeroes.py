@@ -1,19 +1,11 @@
 class Solution:
-    def moveZeroes(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        #everything to the left of left is non-zero
-        #everything to the right of right is zeroes
-        left, right = 0, len(nums) - 1 
+    def moveZeroes(self, nums: list) -> None:
+        slow = 0
+        for fast in range(len(nums)):
+            if nums[fast] != 0 and nums[slow] == 0:
+                nums[slow], nums[fast] = nums[fast], nums[slow]
 
-        while left < right: #ends when left = right aka perfectly partitioned
-            if nums[left] != 0:
-                left += 1
-                continue
-            else: #move zero to the end
-                nums.pop(left)
-                nums.insert(right, 0)
-                right -= 1
-
-            
+            # wait while we find a non-zero element to
+            # swap with you
+            if nums[slow] != 0:
+                slow += 1
