@@ -1,23 +1,20 @@
 class Solution:
     def maxOperations(self, nums: List[int], k: int) -> int:
-        counts = {} #x: 
+        counts = {}
         for x in nums:
-            if x in counts:
-                counts[x] += 1
-            else:
-                counts[x] = 1
+            counts[x] = counts.get(x, 0) + 1
 
-        pairs = 0
+        match = 0 #each pair counted twice
         for x in counts:
             if k - x not in counts:
                 continue
 
             if x * 2 == k:
-                pairs += counts[x]
+                match += counts[x]
             else:
-                pairs += min(counts[x], counts[k - x])
+                match += min(counts[x], counts[k - x])
 
-        return pairs // 2
+        return match // 2
 
         ''' TWO POINTER SOLUTION
         nums.sort() #[1, 3, 3, 3, 4]
