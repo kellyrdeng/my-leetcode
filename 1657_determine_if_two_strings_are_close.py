@@ -1,16 +1,20 @@
 class Solution:
     def closeStrings(self, word1: str, word2: str) -> bool:
-        dict1, dict2 = self.string_to_dict(word1), self.string_to_dict(word2)
-        freq1, freq2 = list(dict1.values()), list(dict2.values())
-        freq1.sort()
-        freq2.sort()
+        #check if they have the same letters
+        if set(word1) != set(word2):
+            return False
 
-        return set(dict1.keys()) == set(dict2.keys()) and freq1.sort() == freq2.sort()
+        #check if they have the same frequency of frequencies
+        list1, list2 = self.string_to_list(word1), self.string_to_list(word2)
+        list1.sort()
+        list2.sort()
+        return list1 == list2
 
-    def string_to_dict(self, word): #returns dictionary with char -> freq
-        d = {}
+    def string_to_list(self, word):
+        list_representation = [0] * 26
 
         for c in word:
-            d[c] = d.get(c, 0) + 1
-
-        return d
+            i = ord(c) - 97
+            list_representation[i] += 1
+        
+        return list_representation
