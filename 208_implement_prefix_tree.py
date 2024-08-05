@@ -1,64 +1,44 @@
+class TrieNode:
+
+    def __init__(self):
+        self.children = {} #char -> TrieNode
+        self.isWord = False
+
 class Trie:
 
     def __init__(self):
-        self.root = TrieNode(None, False)
+        self.root = TrieNode()
 
     def insert(self, word: str) -> None:
-        self.insertHelper(word, self.root)
+        curr = self.root
 
-    def insertHelper(self, word, node):
-        #base cases:
-        if len(word) == 0: #done with word
-            return
-        if len(word) == 1: 
-            if word not in node.children: #doesn't exist, so add it
-                new_node = TrieNode(word[0], True)
-                node.children[word[0]] = new_node
-            else: #already exists, just change isWord to True
-                node.children[word].isWord = True
-            return
-        
-        if word[0] not in node.children: #add it
-            new_node = TrieNode(word[0], False)
-            node.children[word[0]] = new_node
-        
-        #continue recursion
-        self.insertHelper(word[1:], node.children[word[0]])
+        for c in word:
+            if c not in curr.children:
+                curr.children[c] = TrieNode()
+            curr = curr.children[c]
+
+        curr.isWord = True
 
     def search(self, word: str) -> bool:
-        return self.searchHelper(word, self.root)
-
-    def searchHelper(self, word, node):
-        #base case:
-        if len(word) == 1 and word in node.children:
-            return node.children[word].isWord
-
-        if word[0] not in node.children:
-            return False
-        else: #found cur char AND there's more chars left
-            return self.searchHelper(word[1:], node.children[word[0]])
+        curr = self.root
         
-    def startsWith(self, prefix: str) -> bool: #TODO
-        return self.startsWithHelper(prefix, self.root)
-
-    def startsWithHelper(self, prefix, node):
-        #base case:
-        if len(prefix) == 1 and prefix in node.children:
-            return True
-
-        if prefix[0] not in node.children:
-            return False
-        else: #found cur char AND there's more chars left
-            return self.startsWithHelper(prefix[1:], node.children[prefix[0]])
-
-class TrieNode:
-
-    def __init__(self, val, isWord):
-        self.val = val #char
-        self.children = {} #dict of child nodes where val -> child node
-        self.isWord = isWord
+        for c in word:
+            if c not in curr.children:
+                return False
+            curr = curr.children[c]
         
+        return curr.isWord
 
+    def startsWith(self, prefix: str) -> bool:
+        curr = self.root
+        
+        for c in prefix:
+            if c not in curr.children:
+                return False
+            curr = curr.children[c]
+        
+        return True
+        
 
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()
